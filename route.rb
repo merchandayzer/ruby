@@ -1,23 +1,25 @@
 class Route
-  attr_reader :station, :start_station, :new_station, :last_station
+  attr_reader :stations
 
   def initialize(start_station, last_station)
-    @start_station = start_station
-    @last_station = last_station
-    @new_station = []
+    @stations = []
+    @stations << start_station
+    @stations << last_station
+    @index_add_station = 1
   end
 
-  def add_station(station1)
-    @new_station << station1
+  def add_station(station)
+    x = @stations[@index_add_station]
+    @stations[@index_add_station] = station
+    @stations[@index_add_station+1] = x
+    @index_add_station += 1
   end
 
-  def delete_station(station2)
-    @new_station.delete(station2)
+  def delete_station(station)
+    @new_station.delete(station)
   end
 
-  def show_station
-    puts @start_station
-    @new_station.each { |station1| puts station1}
-    puts @last_station
+  def show_stations
+    @stations.each {|station| puts station}
   end
 end

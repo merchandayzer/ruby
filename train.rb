@@ -1,20 +1,24 @@
 class Train
-  attr_reader :value, :number_cars, :type, :train_station, :station_list
+  attr_reader :speed, :number_cars, :type, :current_station, :previous_station, :next_station
 
 
-  def initialize(train_number, type, number_cars)
+def initialize(train_number, type, number_cars)
     @train_number = train_number
     @type = type
     @number_cars = number_cars
     @value = 0
+    @current_station_index = 0
   end
 
   def up_speed(value)
-    @value += value
+    @speed += value
   end
 
-  def brake
-    @value = 0
+  def decrease_speed(value)
+    @speed -= value
+    if @speed < 0
+      @speed = 0
+    end
   end
 
   def add_car
@@ -25,55 +29,39 @@ class Train
 
   def delete_car
     if value == 0
+      if @number_cars > 0
       @number_cars -= 1
+      end
     end
   end
 
   def take_route(route)
     @route = route
-    @train_station = @route.start_station
-    @i = 0
-    @station_list = @route.new_station
   end
 
   def move_forward
-    if @i < @station_list.size
-      @train_station = @station_list[@i]
-      @i += 1
-    elsif @i == station_list.size
-      @train_station = @route.last_station
-      @i += 1
+    if @current_station_index < @route.stations.size - 1
+      @current_station = @route.stations[@current_station_index + 1]
+      @current_station_index += 1
     end
   end
 
   def move_back
-    if @i == 1
-      @train_station = @route.start_station
-      @i -= 1
-    elsif @i > 1
-      @train_station = @station_list[@i - 2]
-      @i -= 1
-    elsif @i == @station_list.length + 1
-      @train_station = @station_list[@station_list.length - 1]
-      @i -= 1
+    if @current_station_index > 0
+    @current_station = @route.stations[@current_station_index - 1]
+    @current_station_index -= 1
     end
   end
 
-  def show_station
-    puts "Current station: #{@train_station}"
-    if @i == 0
-      puts "Next station: #{@station_list[@i]}"
-    elsif @i == 1
-      puts "Previous station: #{@route.start_station}"
-      puts "Next station: #{@station_list[@i]}"
-    elsif @i > 1 && @i < @station_list.length
-      puts "Previous station: #{@station_list[@i - 2]}"
-      puts "Next station: #{@station_list[@i]}"
-    elsif @i == @station_list.length
-      puts "Previous station: #{@station_list[@i - 2]}"
-      puts "Next station: #{@route.last_station}"
-    elsif @i == @station_list.length + 1
-      puts "Previous station: #{@station_list[@i - 2]}"
+  def previous
+    if @current_station_index > 0
+    @previous_station = @route.stations[@current_station_index - 1]
+    end
+  end
+
+  def next
+    if @current_station_index < @route.stations.size - 1
+      @next_station = @route.stations[@current_station_index + 1]
     end
   end
 
