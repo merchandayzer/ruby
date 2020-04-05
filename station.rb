@@ -1,16 +1,20 @@
 class Station
-  attr_reader :name, :trains, :type_trains
+  attr_reader :name, :trains
 
   def initialize(name)
     @name = name
-    @trains = []
   end
 
   def take_train(train)
-    @trains << train
-    @type_trains = {}
-    @type_trains['freight'] = @trains.count {|x| x.type == 'freight'}
-    @type_trains['passenger'] = @trains.count {|x| x.type == 'passenger'}
+    @trains = [train]
+  end
+
+  def freight
+    @trains.count {|x| x.type == 'freight'}
+  end
+
+  def passenger
+    @trains.count {|x| x.type == 'passenger'}
   end
 
   def delete_train(train)
