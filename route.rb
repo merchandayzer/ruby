@@ -14,15 +14,15 @@ class Route
   end
 
   def start_station
-    @start_station
+    @stations[0]
   end
 
   def last_station
-    @last_station
+    @stations.last
   end
 
   def show_stations
     @stations.each {|station| puts station}
   end
-  
+
 end

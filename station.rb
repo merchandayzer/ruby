@@ -6,15 +6,16 @@ class Station
   end
 
   def take_train(train)
-    @trains = [train]
+    @trains = []
+    @trains << train
   end
 
-  def freight
-    @trains.count {|x| x.type == 'freight'}
-  end
-
-  def passenger
-    @trains.count {|x| x.type == 'passenger'}
+  def train_by_type(type)
+    if type == 'freight'
+      @trains.count {|train| train.type == 'freight'}
+    elsif type == 'passenger'
+      @trains.count {|train| train.type == 'passenger'}
+    end
   end
 
   def delete_train(train)

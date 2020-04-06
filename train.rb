@@ -37,21 +37,22 @@ class Train
   def take_route(route)
     @route = route
     @current_station_index = 0
+    @route.stations[@current_station_index].take_train(self)
   end
 
   def move_forward
     if following
-      @current_station = @route.stations[@current_station_index + 1]
       @current_station_index += 1
-      @current_station.take_train(self)
+      @route.stations[@current_station_index].take_train(self)
+      @route.stations[@current_station_index - 1].delete_train(self)
     end
   end
 
   def move_back
     if previous
-    @current_station = @route.stations[@current_station_index - 1]
     @current_station_index -= 1
-    @current_station.take_train(self)
+    @route.stations[@current_station_index].take_train(self)
+    @route.stations[@current_station_index + 1].delete_train(self)
     end
   end
 
@@ -62,7 +63,7 @@ class Train
   end
 
   def current
-    @current_station
+    @route.stations[@current_station_index]
   end
 
   def following
