@@ -50,8 +50,8 @@ class Train
 
   def move_back
     if previous
-      previous.take_train(self)
       current.delete_train(self)
+      previous.take_train(self)
       @current_station_index -= 1
     end
   end
