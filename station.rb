@@ -3,19 +3,15 @@ class Station
 
   def initialize(name)
     @name = name
+    @trains = []
   end
 
   def take_train(train)
-    @trains = []
     @trains << train
   end
 
   def train_by_type(type)
-    if type == 'freight'
-      @trains.count {|train| train.type == 'freight'}
-    elsif type == 'passenger'
-      @trains.count {|train| train.type == 'passenger'}
-    end
+    @trains.count {|train| train.type == type}
   end
 
   def delete_train(train)
