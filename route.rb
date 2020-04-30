@@ -13,16 +13,18 @@ class Route
     @stations.delete(station)
   end
 
+  def show_stations
+    @stations.each {|station| puts station}
+  end
+
+private
+
   def start_station
     @stations[0]
   end
 
   def last_station
     @stations.last
-  end
-
-  def show_stations
-    @stations.each {|station| puts station}
   end
 
 end
